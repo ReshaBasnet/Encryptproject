@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using EncryptProject.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using EncryptCLoud.Models;
 
 namespace EncryptProject
 {
@@ -37,7 +38,7 @@ namespace EncryptProject
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<AspNetUsers>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EncryptCLoud.Models;
+using EncryptProject.Data;
 
 namespace EncryptCLoud.Controllers
 {
     public class FilesController : Controller
     {
-        private readonly encryptappContext _context;
+        //private readonly encryptappContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public FilesController(encryptappContext context)
+        public FilesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -47,7 +49,7 @@ namespace EncryptCLoud.Controllers
         // GET: Files/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -64,7 +66,7 @@ namespace EncryptCLoud.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", file.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", file.UserId);
             return View(file);
         }
 
@@ -81,7 +83,7 @@ namespace EncryptCLoud.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", file.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", file.UserId);
             return View(file);
         }
 
@@ -117,7 +119,7 @@ namespace EncryptCLoud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", file.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", file.UserId);
             return View(file);
         }
 

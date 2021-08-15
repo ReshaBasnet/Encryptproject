@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EncryptCLoud.Models
 {
@@ -10,6 +12,7 @@ namespace EncryptCLoud.Models
             Sharedfile = new HashSet<Sharedfile>();
         }
 
+        [Key]
         public long Id { get; set; }
         public string Path { get; set; }
         public string UserId { get; set; }
