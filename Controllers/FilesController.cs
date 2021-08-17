@@ -7,6 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EncryptCLoud.Models;
 using EncryptProject.Data;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using File = EncryptCLoud.Models.File;
+using System.Net.Mime;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using static EncryptProject.Models.encrypt;
+using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 
 namespace EncryptCLoud.Controllers
 {
@@ -28,6 +38,7 @@ namespace EncryptCLoud.Controllers
         }
 
         // GET: Files/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -38,6 +49,7 @@ namespace EncryptCLoud.Controllers
             var file = await _context.File
                 .Include(f => f.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (file == null)
             {
                 return NotFound();
@@ -58,13 +70,31 @@ namespace EncryptCLoud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Path,UserId,UploadDate")] File file)
+        public async Task<IActionResult> Create(File file)
         {
             if (ModelState.IsValid)
             {
+
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.uploads.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string encPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/encrypted/", uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.uploads.CopyTo(fileStream);
+                }
+                file.Path = uniqueFileName;
+
+                AesOperation aes = new AesOperation();
+                aes.EncryptFile(filePath,encPath);
+                
+                System.IO.File.Delete(filePath);
+
                 _context.Add(file);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", file.UserId);
             return View(file);
@@ -92,7 +122,7 @@ namespace EncryptCLoud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Path,UserId,UploadDate")] File file)
+        public async Task<IActionResult> Edit(long id, File file)
         {
             if (id != file.Id)
             {
@@ -103,6 +133,22 @@ namespace EncryptCLoud.Controllers
             {
                 try
                 {
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.uploads.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    string encPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/encrypted/", uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.uploads.CopyTo(fileStream);
+                    }
+                    file.Path = uniqueFileName;
+
+                    AesOperation aes = new AesOperation();
+                    aes.EncryptFile(filePath, encPath);
+
+                    System.IO.File.Delete(filePath);
+
                     _context.Update(file);
                     await _context.SaveChangesAsync();
                 }
@@ -157,5 +203,30 @@ namespace EncryptCLoud.Controllers
         {
             return _context.File.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public FileResult DownloadFile(string Path)
+        {
+            string uploadsFolder = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/");
+            //Build the File Path.
+            string path = System.IO.Path.Combine(uploadsFolder, Path);
+            string encPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/encrypted/", Path);
+
+            AesOperation aes = new AesOperation();
+            aes.DecryptFile(encPath,path);
+
+            //Read the File data into Byte Array.    
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+            //Send the File to Download.
+            var a = File(bytes, "application/octet-stream", Path);
+
+            System.IO.File.Delete(path);
+
+            return a;
+        }
+
+
+
     }
 }
