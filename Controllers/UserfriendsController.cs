@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EncryptCLoud.Models;
 using EncryptProject.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EncryptCLoud.Controllers
 {
+    [Authorize]
     public class UserfriendsController : Controller
     {
         private readonly ApplicationDbContext _context;

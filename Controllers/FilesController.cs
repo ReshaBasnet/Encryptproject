@@ -17,9 +17,11 @@ using System.Text;
 using static EncryptProject.Models.encrypt;
 using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Mvc.Formatters.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EncryptCLoud.Controllers
 {
+    [Authorize]
     public class FilesController : Controller
     {
         //private readonly encryptappContext _context;
