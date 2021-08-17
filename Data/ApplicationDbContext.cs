@@ -22,7 +22,7 @@ namespace EncryptProject.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;;Database=encryptapp;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-SS92POG;;Database=encryptapp;Integrated Security=True");
             }
         }
 

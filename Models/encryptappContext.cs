@@ -29,7 +29,7 @@
 //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //        {
 //            if (!optionsBuilder.IsConfigured)
-//            {
+//            {//DESKTOP-SS92POG
 //                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;;Database=encryptapp;Integrated Security=True");
 //            }
 //        }

@@ -31,7 +31,7 @@
     </dl>
 </div>
 <div>
-    <a>@Html.ActionLink("Files", "DownloadFile", new { @Model.Path })</a> |
+    <a>@Html.ActionLink("Download", "DownloadFile", new { @Model.Path })</a> |
     
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
