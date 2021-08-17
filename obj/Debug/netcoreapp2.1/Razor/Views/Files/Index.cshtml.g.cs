@@ -87,7 +87,7 @@ using EncryptCLoud.Models;
     ");
             EndContext();
             BeginContext(792, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "114bd849f1124734bab6452fb6156996", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5907bbe132ad46dbbca337648a705bd5", async() => {
                 BeginContext(815, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
@@ -177,7 +177,7 @@ using EncryptCLoud.Models;
             WriteLiteral("\r\n            </td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(1626, 53, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "10eb8049806e47d89d7b26648d2848a5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "92d830076129431abdf5a60ee87df9a1", async() => {
                 BeginContext(1671, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -212,7 +212,7 @@ using EncryptCLoud.Models;
             WriteLiteral(" |\r\n                ");
             EndContext();
             BeginContext(1699, 59, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff3f82eae6fd4488a180c25fec2fa1e0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19b1ff35c1514e089d7929b5c1e04690", async() => {
                 BeginContext(1747, 7, true);
                 WriteLiteral("Details");
                 EndContext();
@@ -247,7 +247,7 @@ using EncryptCLoud.Models;
             WriteLiteral(" |\r\n                ");
             EndContext();
             BeginContext(1778, 57, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "382b3d231dd14422abcb1019d5d1f42b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8e2f684c268b465a8c9de91dde174f60", async() => {
                 BeginContext(1825, 6, true);
                 WriteLiteral("Delete");
                 EndContext();
