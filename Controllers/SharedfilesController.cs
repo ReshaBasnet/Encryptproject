@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EncryptCLoud.Models;
+using EncryptProject.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EncryptCLoud.Controllers
 {
+    [Authorize]
     public class SharedfilesController : Controller
     {
-        private readonly encryptappContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public SharedfilesController(encryptappContext context)
+        public SharedfilesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -48,7 +51,7 @@ namespace EncryptCLoud.Controllers
         // GET: Sharedfiles/Create
         public IActionResult Create()
         {
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["ImageId"] = new SelectList(_context.File, "Id", "Path");
             return View();
         }
@@ -66,7 +69,7 @@ namespace EncryptCLoud.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", sharedfile.FriendId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", sharedfile.FriendId);
             ViewData["ImageId"] = new SelectList(_context.File, "Id", "Path", sharedfile.ImageId);
             return View(sharedfile);
         }
@@ -84,7 +87,7 @@ namespace EncryptCLoud.Controllers
             {
                 return NotFound();
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", sharedfile.FriendId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", sharedfile.FriendId);
             ViewData["ImageId"] = new SelectList(_context.File, "Id", "Path", sharedfile.ImageId);
             return View(sharedfile);
         }
@@ -121,7 +124,7 @@ namespace EncryptCLoud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", sharedfile.FriendId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", sharedfile.FriendId);
             ViewData["ImageId"] = new SelectList(_context.File, "Id", "Path", sharedfile.ImageId);
             return View(sharedfile);
         }

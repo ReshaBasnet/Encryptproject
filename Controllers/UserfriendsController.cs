@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EncryptCLoud.Models;
+using EncryptProject.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EncryptCLoud.Controllers
 {
+    [Authorize]
     public class UserfriendsController : Controller
     {
-        private readonly encryptappContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserfriendsController(encryptappContext context)
+        public UserfriendsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -48,8 +51,8 @@ namespace EncryptCLoud.Controllers
         // GET: Userfriends/Create
         public IActionResult Create()
         {
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -66,8 +69,8 @@ namespace EncryptCLoud.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.FriendId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.UserId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.FriendId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.UserId);
             return View(userfriend);
         }
 
@@ -84,8 +87,8 @@ namespace EncryptCLoud.Controllers
             {
                 return NotFound();
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.FriendId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.UserId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.FriendId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.UserId);
             return View(userfriend);
         }
 
@@ -121,8 +124,8 @@ namespace EncryptCLoud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.FriendId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userfriend.UserId);
+            ViewData["FriendId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.FriendId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", userfriend.UserId);
             return View(userfriend);
         }
 
